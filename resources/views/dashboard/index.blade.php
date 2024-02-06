@@ -92,7 +92,7 @@
                with font-awesome or any other icon font library -->
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon fas fa-users"></i>
                                 <p>
                                     Manage User
                                     <i class="fas fa-angle-left right"></i>
@@ -120,7 +120,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon fas fa-list"></i>
                                 <p>
                                     Manage Category
                                     <i class="fas fa-angle-left right"></i>
@@ -177,7 +177,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-ticket"></i>
+                                <i class="nav-icon fas fa-layer-group"></i>
                                 <p>
                                     Manage Priority
                                     <i class="fas fa-angle-left right"></i>

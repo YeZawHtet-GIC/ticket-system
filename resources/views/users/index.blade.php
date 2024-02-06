@@ -24,7 +24,7 @@
                             <td>
                                 @if ($user->role == 0)
                                     Admin
-                                @elseif ('$user->role==1')
+                                @elseif ($user->role == 1)
                                     Agent
                                 @else
                                     Regular

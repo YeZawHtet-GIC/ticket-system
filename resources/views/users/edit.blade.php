@@ -51,14 +51,14 @@
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="role" value="2" id="flexRadioDefault1"
+                        <input class="form-check-input" type="radio" name="role" value="1" id="flexRadioDefault1"
                             {{ $user->role == 1 ? 'checked' : '' }}>
                         <label class="form-check-label" for="flexRadioDefault1">
                             Agent User
                         </label>
                     </div>
                     <div class="form-check mb-3">
-                        <input class="form-check-input" type="radio" name="role" value="1" id="flexRadioDefault2"
+                        <input class="form-check-input" type="radio" name="role" value="2" id="flexRadioDefault2"
                             {{ $user->role == 2 ? 'checked' : '' }}>
                         <label class="form-check-label" for="flexRadioDefault2">
                             Regular User
