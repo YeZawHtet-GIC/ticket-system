@@ -23,8 +23,8 @@
                                 $filePaths = explode(',', $ticket->file_path_data);
                             @endphp
                             @foreach ($filePaths as $filePath)
-                            {{ $fileName = basename($filePath) }}
-                                <img src="{{ asset('storage/gallery/' . $fileName) }}" alt="Image">
+                            @php $fileName = basename($filePath) @endphp
+                                <img width="100px" height="70px" class="mx-2" src="{{ asset('storage/gallery/' . $fileName) }}" alt="Image">
                             @endforeach
                         @endif
                     </div>
