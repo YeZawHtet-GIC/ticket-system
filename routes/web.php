@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LabelController;
+use App\Http\Controllers\PriorityController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -23,4 +26,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('/user', UserController::class);
+Route::resource('/users', UserController::class);
+Route::resource('/labels', LabelController::class);
+Route::resource('/categories', CategoryController::class);
+Route::resource('/priorities', PriorityController::class);
+

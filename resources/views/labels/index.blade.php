@@ -10,31 +10,19 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Role</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $user)
+                    @foreach ($labels as $label)
                         <tr>
-                            <th scope="row">{{ $user->id }}</th>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>
-                                @if ($user->role == 0)
-                                    Admin
-                                @elseif ('$user->role==1')
-                                    Agent
-                                @else
-                                    Regular
-                                @endif
-                            </td>
-                            <td class="d-flex justify-content-around">
-                                <a class="btn btn-outline-warning" href="{{ route('users.edit', $user) }}"><i
+                            <th scope="row">{{ $label->id }}</th>
+                            <td>{{ $label->name }}</td>
+                            <td class="d-flex">
+                                <a class="btn btn-outline-warning mr-2" href="{{ route('labels.edit', $label) }}"><i
                                         class="fas fa-pen"></i></a>
 
-                                <form action="{{ route('users.destroy', $user) }}" method="post">
+                                <form action="{{ route('labels.destroy', $label) }}" method="post">
                                     @csrf
                                     @method('delete')
                                     <button class="btn btn-outline-danger" type="submit"><i

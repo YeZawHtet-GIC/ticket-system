@@ -41,13 +41,12 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $user = new User;
-        $password = $request->password;
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = Hash::make($password);
+        $user->password = Crypt::encryptString($request->password);
         $user->role = $request->role;
         $user->save();
-        return redirect()->route('user.create')->with('success', "New User Added Successfully");
+        return redirect()->route('users.create')->with('success', "New User Added Successfully");
     }
 
     /**
@@ -70,7 +69,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        $user->password=Crypt::decryptString($user->password);
+        $user->password = Crypt::decryptString($user->password);
         return view('users.edit', compact('user'));
     }
 
@@ -84,13 +83,15 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, $id)
     {
         $user = User::findOrFail($id);
-        $password = $request->password;
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = Crypt::encryptString($password);
+        // Check if a new password is provided
+        if ($request->has('password')) {
+            $user->password = Crypt::encryptString($request->password);
+        }
         $user->role = $request->role;
         $user->update();
-        return redirect()->route('user.index')->with('update', "User Updated Successfully!");
+        return redirect()->route('users.index')->with('update', "User Updated Successfully!");
     }
 
     /**
@@ -103,6 +104,6 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect()->route('user.index')->with('delete', "User Deleted Successfully!");
+        return redirect()->route('users.index')->with('delete', "User Deleted Successfully!");
     }
 }
