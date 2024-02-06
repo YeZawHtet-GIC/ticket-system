@@ -11,4 +11,8 @@ class Label extends Model
     protected $fillable = [
         'name'
     ];
+    public function tickets()
+    {
+        return $this->belongsToMany(Ticket::class, 'ticket_labels','label_id', 'ticket_id');
+    }
 }

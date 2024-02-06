@@ -1,6 +1,9 @@
 @extends('dashboard.index')
 @section('category')
     <div class="container">
+        <div class="row col-6 offset-3 mb-3">
+            <h4>Priority Insert Page</h4>
+        </div>
         <div class="col-6 offset-1">
             @if (session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>

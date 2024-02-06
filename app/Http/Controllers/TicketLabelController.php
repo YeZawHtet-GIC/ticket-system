@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Lable;
-use App\Http\Requests\StoreLableRequest;
-use App\Http\Requests\UpdateLableRequest;
+use App\Models\TicketLabel;
+use App\Http\Requests\StoreTicketLabelRequest;
+use App\Http\Requests\UpdateTicketLabelRequest;
 
-class LableController extends Controller
+class TicketLabelController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +31,10 @@ class LableController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreLableRequest  $request
+     * @param  \App\Http\Requests\StoreTicketLabelRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreLableRequest $request)
+    public function store(StoreTicketLabelRequest $request)
     {
         //
     }
@@ -42,10 +42,10 @@ class LableController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Lable  $lable
+     * @param  \App\Models\TicketLabel  $ticketLabel
      * @return \Illuminate\Http\Response
      */
-    public function show(Lable $lable)
+    public function show(TicketLabel $ticketLabel)
     {
         //
     }
@@ -53,10 +53,10 @@ class LableController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Lable  $lable
+     * @param  \App\Models\TicketLabel  $ticketLabel
      * @return \Illuminate\Http\Response
      */
-    public function edit(Lable $lable)
+    public function edit(TicketLabel $ticketLabel)
     {
         //
     }
@@ -64,11 +64,11 @@ class LableController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateLableRequest  $request
-     * @param  \App\Models\Lable  $lable
+     * @param  \App\Http\Requests\UpdateTicketLabelRequest  $request
+     * @param  \App\Models\TicketLabel  $ticketLabel
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateLableRequest $request, Lable $lable)
+    public function update(UpdateTicketLabelRequest $request, TicketLabel $ticketLabel)
     {
         //
     }
@@ -76,10 +76,10 @@ class LableController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Lable  $lable
+     * @param  \App\Models\TicketLabel  $ticketLabel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Lable $lable)
+    public function destroy(TicketLabel $ticketLabel)
     {
         //
     }

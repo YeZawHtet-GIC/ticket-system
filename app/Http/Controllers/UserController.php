@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Requests\StoreUserRequest;
@@ -43,7 +44,7 @@ class UserController extends Controller
         $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = Crypt::encryptString($request->password);
+        $user->password = Crypt::encrypt($request->password);
         $user->role = $request->role;
         $user->save();
         return redirect()->route('users.create')->with('success', "New User Added Successfully");
@@ -69,7 +70,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        $user->password = Crypt::decryptString($user->password);
+        $user->password = Crypt::decrypt($user->password);
         return view('users.edit', compact('user'));
     }
 
@@ -87,7 +88,7 @@ class UserController extends Controller
         $user->email = $request->email;
         // Check if a new password is provided
         if ($request->has('password')) {
-            $user->password = Crypt::encryptString($request->password);
+            $user->password = Crypt::encrypt($request->password);
         }
         $user->role = $request->role;
         $user->update();
@@ -102,7 +103,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $loginUser = Auth::user();
         $user = User::findOrFail($id);
+        if ($user == $loginUser) {
+            return redirect()->route('users.index')->with('login', "You Can't Delete Yourself!");
+        }
         $user->delete();
         return redirect()->route('users.index')->with('delete', "User Deleted Successfully!");
     }

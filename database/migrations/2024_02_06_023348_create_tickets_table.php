@@ -15,6 +15,14 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->text('text_description');
+            $table->longText('file_path_data');
+            $table->unsignedBigInteger('priority_id');
+            $table->foreign('priority_id')->references('id')->on('priorities')->onDelete('cascade');
+            $table->enum('status', [1, 2])->default(2)->comment("0 for open, 1 for closed");
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
         });
     }

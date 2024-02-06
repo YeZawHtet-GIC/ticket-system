@@ -24,7 +24,7 @@ class StoreLabelRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required',
+            'name'=>'required|unique:labels,name'
         ];
     }
 }

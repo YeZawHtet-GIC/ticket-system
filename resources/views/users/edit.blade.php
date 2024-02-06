@@ -1,7 +1,7 @@
 @extends('dashboard.index')
 @section('category')
     <div class="container">
-        <div class="col-6 offset-1">
+        <div class="col-8 offset-1">
             @if (session('succcess'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif

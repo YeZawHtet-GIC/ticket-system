@@ -24,7 +24,7 @@ class UpdatePriorityRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required',
+            'name'=>'required|unique:priorities,name,'.$this->route('priority')->id,
         ];
     }
 }

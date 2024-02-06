@@ -1,7 +1,12 @@
 @extends('dashboard.index')
 @section('category')
     <div class="container">
-        <div class="col-6 offset-1">
+        @if (session('login'))
+            <div class="alert alert-danger">
+                {{ session('login') }}
+            </div>
+        @endif
+        <div class="col-8 offset-1">
             @if (session('delete'))
                 <div class="alert alert-danger">{{ session('delete') }}</div>
             @endif
