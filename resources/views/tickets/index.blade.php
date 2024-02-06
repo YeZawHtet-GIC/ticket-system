@@ -27,7 +27,6 @@
                                 <img src="{{ asset('storage/gallery/' . $fileName) }}" alt="Image">
                             @endforeach
                         @endif
-
                     </div>
                     <div class="card-footer">
                         <a href="{{ route('tickets.show', $ticket) }}" class="btn btn-outline-primary">Detail</a>
@@ -35,7 +34,6 @@
                     </div>
                 </div>
             @endforeach
-
         </div>
     </div>
 @stop
