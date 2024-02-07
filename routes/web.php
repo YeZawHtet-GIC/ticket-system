@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\LabelController;
-use App\Http\Controllers\PriorityController;
-use App\Http\Controllers\TicketController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\LabelController;
+use App\Http\Controllers\TicketController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PriorityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +33,6 @@ Route::resource('/labels', LabelController::class);
 Route::resource('/categories', CategoryController::class);
 Route::resource('/priorities', PriorityController::class);
 Route::resource('/tickets', TicketController::class);
+Route::resource('/comments', CommentController::class);
+
 

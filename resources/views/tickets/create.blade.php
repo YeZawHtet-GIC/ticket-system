@@ -75,7 +75,7 @@
                         <div class="form-check mx-3">
                             <input class="form-check-input" type="checkbox" name="labels[]" value="{{ $label->id }}"
                                 id="{{ $label->name }}">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <label class="form-check-label" for="{{ $label->name }}">
                                 {{ $label->name }}
                             </label>
                         </div>

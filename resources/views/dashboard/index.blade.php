@@ -82,7 +82,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
+                                <i class="nav-icon fas fa-ticket-alt"></i>
                                 <p>
                                     Manage Ticket
                                     <i class="fas fa-angle-left right"></i>
@@ -108,146 +108,120 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    Manage User
-                                    <i class="fas fa-angle-left right"></i>
-                                    <span class="badge badge-info right">2</span>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('users.index') }}" class="nav-link">
-                                        <i class="nav-icon fas fa-eye text-success"></i>
-                                        <p>
-                                            View User
-                                        </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('users.create') }}" class="nav-link">
-                                        <i class="nav-icon fas fa-plus text-success"></i>
-                                        <p>
-                                            Create New User
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-list"></i>
-                                <p>
-                                    Manage Category
-                                    <i class="fas fa-angle-left right"></i>
-                                    <span class="badge badge-info right">2</span>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('categories.index') }}" class="nav-link">
-                                        <i class="nav-icon fas fa-eye text-success"></i>
-                                        <p>
-                                            View Category
-                                        </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('categories.create') }}" class="nav-link">
-                                        <i class="nav-icon fas fa-plus text-success"></i>
-                                        <p>
-                                            Create New Category
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tag"></i>
-                                <p>
-                                    Manage Label
-                                    <i class="fas fa-angle-left right"></i>
-                                    <span class="badge badge-info right">2</span>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('labels.index') }}" class="nav-link">
-                                        <i class="nav-icon fas fa-eye text-success"></i>
-                                        <p>
-                                            View Label
-                                        </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('labels.create') }}" class="nav-link">
-                                        <i class="nav-icon fas fa-plus text-success"></i>
-                                        <p>
-                                            Create New Label
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-layer-group"></i>
-                                <p>
-                                    Manage Priority
-                                    <i class="fas fa-angle-left right"></i>
-                                    <span class="badge badge-info right">2</span>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('priorities.index') }}" class="nav-link">
-                                        <i class="nav-icon fas fa-eye text-success"></i>
-                                        <p>
-                                            View Priority
-                                        </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('priorities.create') }}" class="nav-link">
-                                        <i class="nav-icon fas fa-plus text-success"></i>
-                                        <p>
-                                            Create New Priority
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        {{-- <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Manage Ticket
-                                    <i class="fas fa-angle-left right"></i>
-                                    <span class="badge badge-info right">2</span>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('tickets.index') }}" class="nav-link">
-                                        <i class="nav-icon fas fa-eye text-success"></i>
-                                        <p>
-                                            View Ticket
-                                        </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('tickets.create') }}" class="nav-link">
-                                        <i class="nav-icon fas fa-plus text-success"></i>
-                                        <p>
-                                            Create New Ticket
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li> --}}
+                        @if (Auth::User()->role == 0)
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-users"></i>
+                                    <p>
+                                        Manage User
+                                        <i class="fas fa-angle-left right"></i>
+                                        <span class="badge badge-info right">2</span>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('users.index') }}" class="nav-link">
+                                            <i class="nav-icon fas fa-eye text-success"></i>
+                                            <p>
+                                                View User
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('users.create') }}" class="nav-link">
+                                            <i class="nav-icon fas fa-plus text-success"></i>
+                                            <p>
+                                                Create New User
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-list"></i>
+                                    <p>
+                                        Manage Category
+                                        <i class="fas fa-angle-left right"></i>
+                                        <span class="badge badge-info right">2</span>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('categories.index') }}" class="nav-link">
+                                            <i class="nav-icon fas fa-eye text-success"></i>
+                                            <p>
+                                                View Category
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('categories.create') }}" class="nav-link">
+                                            <i class="nav-icon fas fa-plus text-success"></i>
+                                            <p>
+                                                Create New Category
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-tag"></i>
+                                    <p>
+                                        Manage Label
+                                        <i class="fas fa-angle-left right"></i>
+                                        <span class="badge badge-info right">2</span>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('labels.index') }}" class="nav-link">
+                                            <i class="nav-icon fas fa-eye text-success"></i>
+                                            <p>
+                                                View Label
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('labels.create') }}" class="nav-link">
+                                            <i class="nav-icon fas fa-plus text-success"></i>
+                                            <p>
+                                                Create New Label
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-layer-group"></i>
+                                    <p>
+                                        Manage Priority
+                                        <i class="fas fa-angle-left right"></i>
+                                        <span class="badge badge-info right">2</span>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('priorities.index') }}" class="nav-link">
+                                            <i class="nav-icon fas fa-eye text-success"></i>
+                                            <p>
+                                                View Priority
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('priorities.create') }}" class="nav-link">
+                                            <i class="nav-icon fas fa-plus text-success"></i>
+                                            <p>
+                                                Create New Priority
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endif
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->

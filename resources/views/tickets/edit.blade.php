@@ -5,7 +5,7 @@
             @if (session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
-            <form action="{{ route('tickets.update',$ticket) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('tickets.update', $ticket) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('put')
                 <div class="mb-3">
@@ -49,7 +49,8 @@
                 @enderror">
                         <option value="">Choose Priority</option>
                         @foreach ($priorities as $priority)
-                            <option value="{{ $priority->id }}" {{ $ticket->priority_id == $priority->id ? 'selected' : '' }}>
+                            <option value="{{ $priority->id }}"
+                                {{ $ticket->priority_id == $priority->id ? 'selected' : '' }}>
                                 {{ $priority->name }}</option>
                         @endforeach
                     </select>
@@ -57,12 +58,30 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-
+                @if (Auth::User()->role == 0)
+                    <div class="mb-3">
+                        <label for="User" class="form-label">Select User to Assign</label>
+                        <select name="user_id"
+                            class="form-control @error('user_id')
+                        is-invalid
+                        @enderror">
+                            <option value="">Choose User to Assign</option>
+                            @foreach ($users as $user)
+                                <option value="{{ $user->id }}" {{ $ticket->user_id == $user->id ? 'selected' : '' }}>
+                                    {{ $user->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('user_id')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                @endif
                 <div class="d-flex mb-3">
                     <b>Choose Category <i class="fas fa-hand-point-right mx-3" aria-hidden="true"></i></b>
                     @foreach ($categories as $category)
                         <div class="form-check mx-2">
                             <input class="form-check-input" type="checkbox" name="categories[]" value="{{ $category->id }}"
+                                {{ in_array($category->id, $checkedCategories) ? 'checked' : '' }}
                                 id="{{ $category->name }}">
                             <label class="form-check-label" for="{{ $category->name }}">
                                 {{ $category->name }}
@@ -74,17 +93,17 @@
                     <b>Choose Label <i class="fas fa-hand-point-right mx-3" aria-hidden="true"></i></b>
                     @foreach ($labels as $label)
                         <div class="form-check mx-3">
+
                             <input class="form-check-input" type="checkbox" name="labels[]" value="{{ $label->id }}"
-                                id="{{ $label->name }}">
-                            <label class="form-check-label" for="flexCheckDefault">
+                                {{ in_array($label->id, $checkedLabels) ? 'checked' : '' }} id="{{ $label->name }}">
+                            <label class="form-check-label" for="{{ $label->name }}">
                                 {{ $label->name }}
                             </label>
                         </div>
                     @endforeach
                 </div>
-                <button type="submit" class="btn btn-outline-primary">Sumit</button>
+                <button type="submit" class="btn btn-outline-warning">Update</button>
             </form>
         </div>
-
     </div>
 @stop

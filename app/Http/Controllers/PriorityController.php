@@ -8,6 +8,10 @@ use App\Http\Requests\UpdatePriorityRequest;
 
 class PriorityController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -38,7 +42,7 @@ class PriorityController extends Controller
     public function store(StorePriorityRequest $request)
     {
         Priority::create($request->all());
-        return redirect()->route('priorities.index')->with('success', "Priority is Created Successfully!");
+        return redirect()->route('priorities.create')->with('success', "Priority is Created Successfully!");
     }
 
     /**

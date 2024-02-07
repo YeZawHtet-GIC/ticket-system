@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Label;
 use App\Models\Ticket;
 use App\Models\Category;
 use App\Models\Priority;
-use App\Models\TicketLabel;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\UpdateTicketRequest;
 
 class TicketController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +24,17 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $tickets = Ticket::all();
+        if (Auth::user()->role == 0) {
+            $tickets = Ticket::all();
+            return view('tickets.index', compact('tickets'));
+        }
+        if (Auth::user()->role == 1) {
+            $tickets = Ticket::where('user_id', Auth::user()->id)->get();
+            $createdTickets = Ticket::where('created_user_id', Auth::user()->id)->get();
+            return view('tickets.index', compact('tickets', 'createdTickets'));
+        }
+        $user = Auth::user();
+        $tickets = Ticket::where('created_user_id', $user->id)->get();
         return view('tickets.index', compact('tickets'));
     }
 
@@ -44,12 +59,11 @@ class TicketController extends Controller
      */
     public function store(StoreTicketRequest $request)
     {
-
         $ticket = new Ticket;
-
         $ticket->title = $request->title;
         $ticket->text_description = $request->description;
         $ticket->priority_id = $request->priority;
+        $ticket->created_user_id = Auth::User()->id;
         //File Data
 
         $fileData = [];
@@ -60,10 +74,8 @@ class TicketController extends Controller
 
             // Generate a unique filename
             $fileName = "gallery_" . uniqid() . "." . $file->extension();
-
             // Store the file in the specified directory
             $file->storeAs("public/gallery", $fileName);
-
             // Save the file path in the array
             $fileData[] = "public/gallery/$fileName";
         }
@@ -89,7 +101,9 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        //
+        $labels = $ticket->labels;
+        $categories = $ticket->categories;
+        return view('tickets.detail', compact('ticket', 'labels', 'categories'));
     }
 
     /**
@@ -103,7 +117,12 @@ class TicketController extends Controller
         $priorities = Priority::all();
         $categories = Category::all();
         $labels = Label::all();
-        return view('tickets.edit',compact('ticket','labels','categories','priorities'));
+        $users = User::where('role', 2)->get();
+        // Fetch checked labels for the ticket
+        $checkedLabels = $ticket->labels->pluck('id')->toArray();
+        // Fetch checked categories for the ticket
+        $checkedCategories = $ticket->categories->pluck('id')->toArray();
+        return view('tickets.edit', compact('ticket', 'labels', 'categories', 'priorities', 'users', 'checkedLabels', 'checkedCategories'));
     }
 
     /**
@@ -115,7 +134,47 @@ class TicketController extends Controller
      */
     public function update(UpdateTicketRequest $request, Ticket $ticket)
     {
-        //
+        $ticket->title = $request->title;
+        $ticket->text_description = $request->description;
+        $ticket->priority_id = $request->priority;
+        if ($request->has('user_id')) {
+            $ticket->user_id = $request->user_id;
+        }
+        // Handle file uploads if any
+        if ($request->hasFile('images')) {
+            $fileData = [];
+            $images = $request->file('images');
+
+            foreach ($images as $file) {
+                $fileName = "gallery_" . uniqid() . "." . $file->extension();
+                $file->storeAs("public/gallery", $fileName);
+                $fileData[] = "public/gallery/$fileName";
+            }
+
+            // Merge existing file paths with new ones
+            $existingFileData = explode(',', $ticket->file_path_data);
+            $fileData = array_merge($existingFileData, $fileData);
+            $ticket->file_path_data = implode(',', $fileData);
+        }
+        // Sync labels
+        if ($request->has('labels')) {
+            $ticket->labels()->sync($request->input('labels'));
+        } else {
+            // If no labels are selected, detach all existing labels
+            $ticket->labels()->detach();
+        }
+
+        // Sync categories
+        if ($request->has('categories')) {
+            $ticket->categories()->sync($request->input('categories'));
+        } else {
+            // If no categories are selected, detach all existing categories
+            $ticket->categories()->detach();
+        }
+
+        $ticket->save();
+
+        return redirect()->route('tickets.index')->with('success', "Ticket Updated Successfully!");
     }
 
     /**
@@ -126,6 +185,11 @@ class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
-        //
+        if ($ticket) {
+            $ticket->delete();
+            return redirect()->route('tickets.index')->with('delete', "Ticket is Deleted Successfully!");
+        }
+
+        return redirect()->back();
     }
 }

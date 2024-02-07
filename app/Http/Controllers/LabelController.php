@@ -8,6 +8,10 @@ use App\Http\Requests\UpdateLabelRequest;
 
 class LabelController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -38,7 +42,7 @@ class LabelController extends Controller
     public function store(StoreLabelRequest $request)
     {
         Label::create($request->all());
-        return redirect()->route('labels.index')->with('success',"Label is Created Successfully!");
+        return redirect()->route('labels.create')->with('success',"Label is Created Successfully!");
     }
 
     /**

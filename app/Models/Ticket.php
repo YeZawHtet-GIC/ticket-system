@@ -16,4 +16,20 @@ class Ticket extends Model
     {
         return $this->belongsToMany(Category::class, 'ticket_categories');
     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+    public function priority()
+    {
+        return $this->belongsTo(Priority::class, 'priority_id');
+    }
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+    public function createdBy()
+{
+    return $this->belongsTo(User::class, 'created_user_id');
+}
 }
