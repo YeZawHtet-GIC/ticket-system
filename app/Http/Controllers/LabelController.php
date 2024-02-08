@@ -19,7 +19,7 @@ class LabelController extends Controller
      */
     public function index()
     {
-        $labels = Label::all();
+        $labels = Label::latest()->Paginate(5);
         return view('labels.index', compact('labels'));
     }
 

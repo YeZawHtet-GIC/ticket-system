@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Label;
 use App\Models\Ticket;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,17 +28,25 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // For Admin dashboard
         if (Auth::user()->role == 0) {
-            $tickets = Ticket::all();
-            return view('home', compact('tickets'));
+            $tickets = Ticket::latest()->Paginate(5);
+            $categories=Category::all();
+            $labels=Label::all();
+            $users=User::all();
+            return view('home', compact('tickets', 'categories', 'labels','users'));
         }
+        // For Agent User dashboard
         if (Auth::user()->role == 1) {
-            $tickets = Ticket::where('user_id', Auth::user()->id)->get();
-            $createdTickets = Ticket::where('created_user_id', Auth::user()->id)->get();
-            return view('home', compact('tickets', 'createdTickets'));
+            $tickets = Ticket::where('user_id', Auth::user()->id)
+                ->orWhere('created_user_id', Auth::user()->id)
+                ->latest()->Paginate(5);
+            $assignedTickets = Ticket::where('user_id', Auth::user()->id)->get();
+            return view('home', compact('tickets', 'assignedTickets'));
         }
+        //For Regular User dashboard
         $user = Auth::user();
-        $tickets = Ticket::where('created_user_id', $user->id)->get();
-        return view('home',compact('tickets'));
+        $tickets = Ticket::where('created_user_id', $user->id)->latest()->Paginate(5);
+        return view('home', compact('tickets'));
     }
 }

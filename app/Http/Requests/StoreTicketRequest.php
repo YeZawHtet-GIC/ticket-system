@@ -24,13 +24,19 @@ class StoreTicketRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required',
-            'description'=>'required',
-            'priority'=>'required',
-            // 'status'=>'required',
-            // 'user_id'=>'required',
-            // 'category_id'=>'required',
-            // 'label_id'=>'required',
+            'title' => 'required',
+            'description' => 'required',
+            'priority' => 'required',
+            'image[]' => 'required',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'title.required' => 'The title field is required.',
+            'description.required' => 'The description field is required.',
+            'priority.required' => 'The priority field is required.',
+            'image[].required' => 'At least one image must be uploaded.',
         ];
     }
 }

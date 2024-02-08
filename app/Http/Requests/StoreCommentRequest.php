@@ -24,7 +24,13 @@ class StoreCommentRequest extends FormRequest
     public function rules()
     {
         return [
-            'content'=>'required',
+            'content' => 'required',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'content.required' => 'The content field is required.',
         ];
     }
 }

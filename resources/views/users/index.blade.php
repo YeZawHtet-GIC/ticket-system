@@ -10,8 +10,9 @@
             @if (session('delete'))
                 <div class="alert alert-danger">{{ session('delete') }}</div>
             @endif
-            <table class="table">
-                <thead>
+            {{ $users->links() }}
+            <table class="table table-striped">
+                <thead class="table-dark">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
@@ -23,7 +24,7 @@
                 <tbody>
                     @foreach ($users as $user)
                         <tr>
-                            <th scope="row">{{ $user->id }}</th>
+                            <th scope="row">{{ $loop->iteration }}</th>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>

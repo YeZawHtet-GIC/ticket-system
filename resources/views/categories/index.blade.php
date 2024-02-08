@@ -8,8 +8,9 @@
             @if (session('delete'))
             <div class="alert alert-danger">{{ session('delete') }}</div>
         @endif
-        <table class="table">
-            <thead>
+        {{ $categories->links() }}
+        <table class="table table-striped">
+            <thead class="table-dark">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
@@ -19,7 +20,7 @@
             <tbody>
                 @foreach ($categories as $category)
                     <tr>
-                        <th scope="row">{{ $category->id }}</th>
+                        <th scope="row">{{ $loop->iteration }}</th>
                         <td>{{ $category->name }}</td>
                         <td class="d-flex">
                             <a class="btn btn-outline-warning mr-2" href="{{ route('categories.edit', $category) }}"><i

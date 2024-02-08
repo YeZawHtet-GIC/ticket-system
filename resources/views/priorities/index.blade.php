@@ -8,8 +8,9 @@
               @if (session('delete'))
             <div class="alert alert-danger">{{ session('delete') }}</div>
         @endif
-        <table class="table">
-            <thead>
+        {{ $priorities->links() }}
+        <table class="table table-striped">
+            <thead class="table-dark">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
@@ -19,7 +20,7 @@
             <tbody>
                 @foreach ($priorities as $priority)
                     <tr>
-                        <th scope="row">{{ $priority->id }}</th>
+                        <th scope="row">{{ $loop->iteration }}</th>
                         <td>{{ $priority->name }}</td>
                         <td class="d-flex">
                             <a class="btn btn-outline-warning  mr-2" href="{{ route('priorities.edit', $priority) }}"><i

@@ -24,17 +24,20 @@ class TicketController extends Controller
      */
     public function index()
     {
+        //For Admin
         if (Auth::user()->role == 0) {
-            $tickets = Ticket::all();
+            $tickets = Ticket::latest()->Paginate(5);
             return view('tickets.index', compact('tickets'));
         }
+        //For Agent User
         if (Auth::user()->role == 1) {
-            $tickets = Ticket::where('user_id', Auth::user()->id)->get();
-            $createdTickets = Ticket::where('created_user_id', Auth::user()->id)->get();
-            return view('tickets.index', compact('tickets', 'createdTickets'));
+            $tickets = Ticket::where('user_id', Auth::user()->id)
+                ->orWhere('created_user_id', Auth::user()->id)
+                ->latest()->Paginate(5);
+            return view('tickets.index', compact('tickets'));
         }
-        $user = Auth::user();
-        $tickets = Ticket::where('created_user_id', $user->id)->get();
+        //for Regular Users
+        $tickets = Ticket::where('created_user_id', Auth::user()->id)->latest()->Paginate(5);
         return view('tickets.index', compact('tickets'));
     }
 
@@ -65,13 +68,9 @@ class TicketController extends Controller
         $ticket->priority_id = $request->priority;
         $ticket->created_user_id = Auth::User()->id;
         //File Data
-
         $fileData = [];
-
         $images = $request->file('images'); // Access the array of uploaded files
-
         foreach ($images as $file) {
-
             // Generate a unique filename
             $fileName = "gallery_" . uniqid() . "." . $file->extension();
             // Store the file in the specified directory
@@ -117,7 +116,7 @@ class TicketController extends Controller
         $priorities = Priority::all();
         $categories = Category::all();
         $labels = Label::all();
-        $users = User::where('role', 2)->get();
+        $users = User::where('role', 2)->get(); //only retrieve agent users
         // Fetch checked labels for the ticket
         $checkedLabels = $ticket->labels->pluck('id')->toArray();
         // Fetch checked categories for the ticket
@@ -140,17 +139,15 @@ class TicketController extends Controller
         if ($request->has('user_id')) {
             $ticket->user_id = $request->user_id;
         }
-        // Handle file uploads if any
+        // Handle file uploads if has file
         if ($request->hasFile('images')) {
             $fileData = [];
             $images = $request->file('images');
-
             foreach ($images as $file) {
                 $fileName = "gallery_" . uniqid() . "." . $file->extension();
                 $file->storeAs("public/gallery", $fileName);
                 $fileData[] = "public/gallery/$fileName";
             }
-
             // Merge existing file paths with new ones
             $existingFileData = explode(',', $ticket->file_path_data);
             $fileData = array_merge($existingFileData, $fileData);
@@ -171,9 +168,7 @@ class TicketController extends Controller
             // If no categories are selected, detach all existing categories
             $ticket->categories()->detach();
         }
-
-        $ticket->save();
-
+        $ticket->update();
         return redirect()->route('tickets.index')->with('success', "Ticket Updated Successfully!");
     }
 
@@ -189,7 +184,6 @@ class TicketController extends Controller
             $ticket->delete();
             return redirect()->route('tickets.index')->with('delete', "Ticket is Deleted Successfully!");
         }
-
         return redirect()->back();
     }
 }

@@ -25,9 +25,19 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:users,email,' . $this->route('user'),
             'password' => 'required',
-            'role'=>'required',
+            'role' => 'required',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'name.required' => 'The name field is required.',
+            'email.required' => 'The email field is required.',
+            'email.unique' => 'The email has already been taken.',
+            'password.required' => 'The password field is required.',
+            'role.required' => 'The role field is required.',
         ];
     }
 }

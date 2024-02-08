@@ -19,7 +19,7 @@ class PriorityController extends Controller
      */
     public function index()
     {
-        $priorities = Priority::all();
+        $priorities = Priority::latest()->Paginate(5);
         return view('priorities.index', compact('priorities'));
     }
 

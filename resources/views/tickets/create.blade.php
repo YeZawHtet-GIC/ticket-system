@@ -32,11 +32,11 @@
                 <div class="mb-3">
                     <label for="Image" class="form-label">Image</label>
                     <input type="file"
-                        class="form-control @error('image')
+                        class="form-control @error('image[]')
                     is-invalid
                 @enderror"
                         name="images[]" multiple>
-                    @error('image')
+                    @error('image[]')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>

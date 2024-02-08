@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Http\Requests\StoreCommentRequest;
-use App\Http\Requests\UpdateCommentRequest;
 
 class CommentController extends Controller
 {
@@ -36,12 +35,12 @@ class CommentController extends Controller
      */
     public function store(StoreCommentRequest $request)
     {
-        $comment=new Comment;
-        $comment->content=$request->content;
-        $comment->ticket_id=$request->ticket_id;
-        $comment->user_id=$request->user_id;
+        $comment = new Comment;
+        $comment->content = $request->content;
+        $comment->ticket_id = $request->ticket_id;
+        $comment->user_id = $request->user_id;
         $comment->save();
-        return redirect()->back()->with('success','Comment created successfully!');
+        return redirect()->back()->with('success', 'New Comment Added!');
     }
 
     /**
@@ -63,21 +62,23 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
-        //
+        return redirect()->back()->with('comment', $comment);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateCommentRequest  $request
+     * @param  \App\Http\Requests\StoreCommentRequest  $request
      * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateCommentRequest $request, Comment $comment)
-    {
-        //
+    */
+    public function update(StoreCommentRequest $request, Comment $comment){
+        $comment->content = $request->content;
+        $comment->ticket_id = $request->ticket_id;
+        $comment->user_id = $request->user_id;
+        $comment->update();
+        return redirect()->back()->with('update', 'Comment updated successfully!');
     }
-
+     
     /**
      * Remove the specified resource from storage.
      *
@@ -86,9 +87,9 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        if($comment){
+        if ($comment) {
             $comment->delete();
-            return redirect()->back()->with('delete','Comment deleted successfully!');
+            return redirect()->back()->with('delete', 'Comment deleted successfully!');
         }
     }
 }
