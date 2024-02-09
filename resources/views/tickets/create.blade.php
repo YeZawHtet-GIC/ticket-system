@@ -56,7 +56,6 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-            
                 <div class="d-flex mb-3">
                     <b>Choose Category <i class="fas fa-hand-point-right mx-3" aria-hidden="true"></i></b>
                     @foreach ($categories as $category)

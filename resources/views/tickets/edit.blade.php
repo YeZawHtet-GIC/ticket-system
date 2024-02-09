@@ -2,9 +2,11 @@
 @section('category')
     <div class="container">
         <div class="col-8 offset-1">
+            {{-- Alert for Update Success --}}
             @if (session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
+            {{-- Edit Form Start --}}
             <form action="{{ route('tickets.update', $ticket) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('put')
@@ -58,6 +60,7 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
+                {{-- Assign Agent Options and Status ONLY for Admin Start --}}
                 @if (Auth::User()->role == 0)
                     <div class="mb-3">
                         <label for="User" class="form-label">Select User to Assign</label>
@@ -93,6 +96,7 @@
                         </div>
                     </div>
                 @endif
+                {{-- Assign Agent Options and Status ONLY for Admin End --}}
                 <div class="d-flex mb-3">
                     <b>Choose Category <i class="fas fa-hand-point-right mx-3" aria-hidden="true"></i></b>
                     @foreach ($categories as $category)
@@ -121,6 +125,7 @@
                 </div>
                 <button type="submit" class="btn btn-outline-warning">Update</button>
             </form>
+            {{-- Edit Form End --}}
         </div>
     </div>
 @stop

@@ -72,6 +72,7 @@
                     @endif
                 </div>
                 <div class="card-footer shadow bg-light">
+                    {{-- Commments List Start --}}
                     <b>All Comments ({{ count($ticket->comments) }})</b>
                     <ul class="list-group rounded">
                         @foreach ($ticket->comments as $comment)
@@ -86,10 +87,13 @@
                                     </span>
                                     <span class="d-inline">{{ $comment->content }}</span>
                                 </div>
-                                @if (Auth::user()->id == $comment->user->id || Auth::user()->role == 0 || Auth::user()->role == 1)
+                                {{-- Edit and Delete Access for Comment Creator and Admin and Agent Only Start --}}
+                                @if (Auth::user()->id == $comment->user->id || Auth::user()->role == 0)
                                     <div class="btn-group">
-                                        <a href="{{ route('comments.edit', $comment) }}"
-                                            class="btn btn-sm btn-outline-warning mx-3"><i class="fas fa-pen"></i></a>
+                                        @if (Auth::user()->id == $comment->user->id)
+                                            <a href="{{ route('comments.edit', $comment) }}"
+                                                class="btn btn-sm btn-outline-warning mx-3"><i class="fas fa-pen"></i></a>
+                                        @endif
                                         <form action="{{ route('comments.destroy', $comment) }}" method="post">
                                             @csrf
                                             @method('delete')
@@ -100,9 +104,11 @@
                                         </form>
                                     </div>
                                 @endif
+                                {{-- Edit and Delete Access for Comment Creator and Admin Only End --}}
                             </li>
                         @endforeach
                     </ul>
+                    {{-- Commments List End --}}
                     @auth
                         @if (session('update'))
                             <b class="text-success">{{ session('update') }}</b>
@@ -111,11 +117,12 @@
                         @else
                             <b class="text-success">{{ session('success') }}</b>
                         @endif
+                        {{-- Comment Update Form Start --}}
                         @if (session('comment'))
-                            <form action="{{ route('comments.update',$comment) }}" method="post">
+                            <form action="{{ route('comments.update', session('comment')) }}" method="post">
                                 @csrf
                                 @method('put')
-                               
+
                                 <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
                                 <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                                 <textarea name="content" class="form-control my-2 @error('content') is-invalid @enderror" placeholder="New Comment">{{ session('comment.content') }}</textarea>
@@ -125,6 +132,8 @@
                                 @enderror
                                 <input type="submit" value="Update Comment" class="btn btn-outline-warning my-2">
                             </form>
+                            {{-- Comment Update Form End --}}
+                            {{-- Comment Add Form Start --}}
                         @else
                             <form action="{{ route('comments.store') }}" method="post">
                                 @csrf
@@ -137,6 +146,7 @@
                                 <input type="submit" value="Add Comment" class="btn btn-outline-primary my-2">
                             </form>
                         @endif
+                        {{-- Comment Add Form End --}}
                     @endauth
                 </div>
             </div>

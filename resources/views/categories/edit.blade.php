@@ -26,6 +26,5 @@
                 <button type="submit" class="btn btn-outline-warning">Update</button>
             </form>
         </div>
-
     </div>
 @stop

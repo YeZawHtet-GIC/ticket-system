@@ -25,6 +25,5 @@
                 <button type="submit" class="btn btn-outline-primary">Create</button>
             </form>
         </div>
-
     </div>
 @stop

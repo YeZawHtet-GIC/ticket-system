@@ -1,16 +1,8 @@
 @extends('dashboard.index')
 @section('category')
     <div class="container-fluid">
-        @if (session('login'))
-            <div class="alert alert-danger">
-                {{ session('login') }}
-            </div>
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <strong>{{ session('login') }}</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
         <div class="col-md-12">
+            {{-- Pagination links --}}
             {{ $tickets->links() }}
             <table class="table table-striped">
                 <thead class="table-dark">
@@ -26,6 +18,7 @@
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
+                {{-- Data from Ticket Table start --}}
                 <tbody>
                     @foreach ($tickets as $ticket)
                         <tr class="text-center">
@@ -77,6 +70,7 @@
                             <td class="d-flex">
                                 <a href="{{ route('tickets.show', $ticket) }}" class="btn btn-outline-primary mx-2"><i
                                         class="fas fa-info"></i></a>
+                                {{-- EDIT & DELETE ONLY for Admin & Agent  start --}}
                                 @if (Auth::User()->role == 0 || Auth::User()->role == 1)
                                     <a href="{{ route('tickets.edit', $ticket) }}" class="btn btn-outline-warning mx-2"><i
                                             class="fas fa-pen"></i></a>
@@ -88,10 +82,12 @@
                                                 class="fas fa-trash"></i></button>
                                     </form>
                                 @endif
+                                {{-- EDIT & DELETE ONLY for Admin & Agent end --}}
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
+                {{-- Data from Ticket Table end --}}
             </table>
         </div>
     </div>
