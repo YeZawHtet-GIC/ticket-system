@@ -21,6 +21,7 @@
                         <th scope="col">Image</th>
                         <th scope="col">Created By</th>
                         <th scope="col">Priority</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Assigned User</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -55,7 +56,19 @@
                                text-success @endif">
                                 {{ $ticket->priority->name }}
                             </td>
-
+                            <td
+                                class="
+                        @if ($ticket->status == 2) text-danger 
+                       @else
+                           text-success @endif">
+                                <b>
+                                    @if ($ticket->status == 2)
+                                        Close
+                                    @else
+                                        Open
+                                    @endif
+                                </b>
+                            </td>
                             @if (!empty($ticket->users->name))
                                 <td><b class="text-success">{{ $ticket->users->name }}</b></td>
                             @else
@@ -70,7 +83,8 @@
                                     <form action="{{ route('tickets.destroy', $ticket) }}" method="post" class="mx-2">
                                         @csrf
                                         @method('delete')
-                                        <button class="btn btn-outline-danger" type="submit"><i
+                                        <button class="btn btn-outline-danger"
+                                            onclick="return confirm('Are you sure you want to delete?')" type="submit"><i
                                                 class="fas fa-trash"></i></button>
                                     </form>
                                 @endif

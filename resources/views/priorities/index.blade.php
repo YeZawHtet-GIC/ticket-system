@@ -29,7 +29,7 @@
                             <form action="{{ route('priorities.destroy', $priority) }}" method="post">
                                 @csrf
                                 @method('delete')
-                                <button class="btn btn-outline-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                <button class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete?')" type="submit"><i class="fas fa-trash"></i></button>
                             </form>
                         </td>
                     </tr>

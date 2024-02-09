@@ -3,8 +3,8 @@
 @section('category')
     <div class="container">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header row row-cols-2 row-cols-md-2 row-cols-lg-4" style="background-color: #687EFF">
+            <div class="card shadow">
+                <div class="card-header row row-cols-2 row-cols-md-2 row-cols-lg-4" style="background-color: #b8c1f6">
                     <div class="col"><b class="badge badge-dark badge-pill p-2 m-2" style="color: #687EFF; ">Title :
                             {{ $ticket->title }}</b></div>
                     <div class="col">
@@ -63,7 +63,7 @@
                                 @endforeach
                             </div>
                             <div class="category-group col-md-6" style="border-left:1px solid">
-                                <b>Categories <i class="fas fa-hand-point-right mx-2"></i></b>
+                                <b class="m-3">Categories <i class="fas fa-hand-point-right mx-2"></i></b>
                                 @foreach ($categories as $category)
                                     <span class="badge badge-info my-2">{{ $category->name }}</span>
                                 @endforeach
@@ -112,9 +112,10 @@
                             <b class="text-success">{{ session('success') }}</b>
                         @endif
                         @if (session('comment'))
-                            <form action="{{ route('comments.update', $comment) }}" method="post">
+                            <form action="{{ route('comments.update',$comment) }}" method="post">
                                 @csrf
                                 @method('put')
+                               
                                 <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
                                 <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                                 <textarea name="content" class="form-control my-2 @error('content') is-invalid @enderror" placeholder="New Comment">{{ session('comment.content') }}</textarea>

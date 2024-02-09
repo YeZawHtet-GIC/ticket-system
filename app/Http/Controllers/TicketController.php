@@ -136,6 +136,7 @@ class TicketController extends Controller
         $ticket->title = $request->title;
         $ticket->text_description = $request->description;
         $ticket->priority_id = $request->priority;
+        $ticket->status = $request->status;
         if ($request->has('user_id')) {
             $ticket->user_id = $request->user_id;
         }

@@ -75,6 +75,23 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="d-flex col-8 ">
+                        <b>Status <i class="fas fa-hand-point-right mx-3" aria-hidden="true"></i> </b>
+                        <div class="form-check mx-3">
+                            <input class="form-check-input" type="radio" name="status" value="1"
+                                id="flexRadioDefault3" {{ $ticket->status == 1 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="flexRadioDefault3">
+                                Open
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status" value="2"
+                                id="flexRadioDefault1" {{ $ticket->status == 2 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                Close
+                            </label>
+                        </div>
+                    </div>
                 @endif
                 <div class="d-flex mb-3">
                     <b>Choose Category <i class="fas fa-hand-point-right mx-3" aria-hidden="true"></i></b>

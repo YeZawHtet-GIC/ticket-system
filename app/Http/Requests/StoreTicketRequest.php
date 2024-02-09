@@ -27,7 +27,7 @@ class StoreTicketRequest extends FormRequest
             'title' => 'required',
             'description' => 'required',
             'priority' => 'required',
-            'image[]' => 'required',
+            'images' => 'required',
         ];
     }
     public function messages()
@@ -36,7 +36,7 @@ class StoreTicketRequest extends FormRequest
             'title.required' => 'The title field is required.',
             'description.required' => 'The description field is required.',
             'priority.required' => 'The priority field is required.',
-            'image[].required' => 'At least one image must be uploaded.',
+            'images.required' => 'At least one image must be uploaded.',
         ];
     }
 }

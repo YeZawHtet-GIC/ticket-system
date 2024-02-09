@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Http\Requests\StoreCommentRequest;
+use App\Http\Requests\UpdateCommentRequest;
 
 class CommentController extends Controller
 {
@@ -68,17 +69,18 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\StoreCommentRequest  $request
+     * @param  \App\Http\Requests\UpdateCommentRequest  $request
      * @param  \App\Models\Comment  $comment
-    */
-    public function update(StoreCommentRequest $request, Comment $comment){
+     */
+    public function update(UpdateCommentRequest $request, Comment $comment)
+    {
         $comment->content = $request->content;
         $comment->ticket_id = $request->ticket_id;
         $comment->user_id = $request->user_id;
         $comment->update();
         return redirect()->back()->with('update', 'Comment updated successfully!');
     }
-     
+
     /**
      * Remove the specified resource from storage.
      *
